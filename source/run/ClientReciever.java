@@ -25,11 +25,9 @@ public class ClientReciever implements Runnable{
 	@Override
 	public void run() {
 		String s;
-		System.out.println("reader");
 
 		try {
 			while((s = reader.readLine()) != null){
-				System.out.println("reader");
 				String[] strs = s.split(",");
 				for(int i = 0; i < strs.length; i++){
 					strs[i] = strs[i].trim();
@@ -38,19 +36,25 @@ public class ClientReciever implements Runnable{
 				try{
 					myCharacter.bools.read(strs[0]);
 				}catch(NumberFormatException e){
-					System.err.println(myCharacter.ID+": BOOLS ARE WRONG");
+					System.err.print(myCharacter.ID+": BOOLS ARE WRONG: ");
+					System.err.println(strs[0]);
 					client.close();
 				}
 				try{
 					myCharacter.floats.read(strs, 1);
 				}catch(NumberFormatException e){
 					System.err.println(myCharacter.ID+":FLOATS ARE WRONG");
-
+					System.out.println(s);
 					client.close();
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(myCharacter.ID+" Disconnected");
+			try {
+				client.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}finally{
 			characters.remove(myCharacter);
 			try {

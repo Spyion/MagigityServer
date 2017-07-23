@@ -25,7 +25,7 @@ public class Server {
 				while(true){
 					Socket client = server.accept();
 					System.out.println("Connection recieved");
-					executor.execute(new clientHandler(client, characters));
+					executor.execute(new ClientHandler(client, characters));
 //					executor.execute(new Debug(characters));
 				}		
 			} catch (IOException e) {

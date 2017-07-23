@@ -12,13 +12,13 @@ public class CharacterFloats {
 //		for(String val : vals){
 //			val.trim();
 //		}
-		if(vals.length > start){
+		if(vals.length > start && vals.length > 0){
 			rot = Float.parseFloat(vals[start++]);
-		}if(vals.length > start){
+		}if(vals.length > start && vals.length > 1){
 			cameraRot = Float.parseFloat(vals[start++]);
-		}if(vals.length > start){
+		}if(vals.length > start && vals.length > 2){
 			posX = Float.parseFloat(vals[start++]);
-		}if(vals.length > start){
+		}if(vals.length > start && vals.length > 3){
 			posY = Float.parseFloat(vals[start++]);
 		}
 	}
@@ -34,7 +34,8 @@ public class CharacterFloats {
 		if(length>3&&start<4)
 			str += Float.toString(posY)+", ";
 		
-		return str;
+		
+		return str.substring(0, str.length()-2);
 	}
 	public String toString(int length){
 		return toString(0, length);

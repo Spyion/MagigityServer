@@ -11,13 +11,13 @@ import java.util.concurrent.Executors;
 import connections.mysqlconn;
 import structs.GameCharacter;
 
-public class clientHandler implements Runnable {
+public class ClientHandler implements Runnable {
 	
 	public final ArrayList<GameCharacter> characters;
 	public final Socket client;
 	public static ExecutorService listeners = Executors.newCachedThreadPool();
 	public static ExecutorService writers = Executors.newCachedThreadPool();
-	public clientHandler(Socket client, ArrayList<GameCharacter> characters) {
+	public ClientHandler(Socket client, ArrayList<GameCharacter> characters) {
 		this.client = client;
 		this.characters = characters;
 	}
@@ -35,7 +35,6 @@ public class clientHandler implements Runnable {
 			for(int i = 0; i < strs.length; i++){
 				strs[i] = strs[i].trim();
 			}
-			System.out.println(strs[0]+ "/"+strs[1]);
 			if(mysqlconn.checkPw(strs[0], strs[1]).equals("true")){
 				disconnected = false;
 				GameCharacter character = new GameCharacter(strs[0]);

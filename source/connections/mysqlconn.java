@@ -23,8 +23,6 @@ public class mysqlconn {
        
          BufferedReader br = new BufferedReader(new InputStreamReader(new URL("http://magigity.bplaced.net/WebService/webservice.php?gamename="+name+"&gamepw="+pw).openStream()));
                  b = br.readLine();
-                 System.out.println(b); // print the string b
-                 System.out.println(name);
                
 
          } catch(IOException e){

@@ -30,9 +30,8 @@ public class ClientSender implements Runnable{
 			if(!toWrite.equals(myCharacter.ID)){
 					
 				toWrite += ", ";
-				toWrite += character.floats.toString(2,4);
-				System.out.println(toWrite);
-					
+				toWrite += character.floats.toString(2,4);	
+				System.out.println("InitOnline "+myCharacter.ID+": "+toWrite);
 				writer.println(toWrite);
 				writer.flush();
 				try {
@@ -43,7 +42,9 @@ public class ClientSender implements Runnable{
 			}
 			
 		}
-			
+		System.out.println("f");
+		writer.println("f");
+		writer.flush();
 		characters.add(myCharacter);
 	}
 
@@ -51,8 +52,7 @@ public class ClientSender implements Runnable{
 	@Override
 	public void run() {
 		int count=0;
-		while(true){ 
-			System.out.println("Sender");
+		while(characters.contains(myCharacter)){ 
 			try {
 				for(GameCharacter character : myCharactersCharacters){
 					String toWrite = character.ID;
@@ -61,19 +61,18 @@ public class ClientSender implements Runnable{
 						toWrite += ", ";
 						toWrite += character.bools.toString()+", ";
 						
-						if(count > 1000){
-							count -= 1000;
+						if(count > 100){
+							count -= 100;
 							toWrite += character.floats.toString(4);
 						}else
 						{
 							toWrite += character.floats.toString(2);
 						}
 						
-						
 						writer.println(toWrite);
 						writer.flush();
-						Thread.sleep(50);
-						count+=50;
+						Thread.sleep(10);
+						count+=10;
 					}
 				
 				}
@@ -93,26 +92,31 @@ public class ClientSender implements Runnable{
 				}
 				if(!newOnline.isEmpty()){
 					int i = newOnline.size()-1;
-					writer.println(newOnline.get(i).ID);
+					writer.println("Online, "+newOnline.get(i).ID+", "+newOnline.get(i).floats.posX+", "+newOnline.get(i).floats.posY);
+					System.out.println(myCharacter.ID+": Online, "+newOnline.get(i).ID+", "+newOnline.get(i).floats.posX+", "+newOnline.get(i).floats.posY);
 					myCharactersCharacters.add(newOnline.get(i));
 					newOnline.remove(i);
 				}else if(!newOffline.isEmpty()){
 					int i = newOffline.size()-1;
-					writer.println(newOffline.get(i).ID);
+					writer.println("Offline, "+newOffline.get(i).ID);
+					System.out.println(myCharacter.ID+" -> Offline:  "+newOffline.get(i).ID);
+
 					myCharactersCharacters.remove(newOffline.get(i));
 					newOffline.remove(i);
 				}
 				
-				Thread.sleep(50);
-				count+=50;
-				
-				
+				Thread.sleep(10);
+				count+=10;
 				
 			}catch(Exception e){
-				
-			} finally {
-				writer.close();
+				break;
 			}
+		}
+		writer.close();
+		try {
+			client.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
