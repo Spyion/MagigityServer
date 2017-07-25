@@ -1,13 +1,42 @@
 package structs;
 
+import java.util.ArrayList;
+
+import connections.mysqlconn;
+
 public class GameCharacter {
-	public final String ID;
-	public final CharacterBooleans bools;
-	public final CharacterFloats floats;
-	public GameCharacter(String iD) {
+	public final String name;
+	public final byte ID;
+	
+	public static final ArrayList<Byte> IDs = new ArrayList<Byte>();
+	
+	public int positionX;
+	public int positionY;
+	//in Degrees
+	public float rotation;
+	
+	public GameCharacter(String name) {
 		super();
-		ID = iD;
-		bools = new CharacterBooleans();
-		floats = new CharacterFloats(ID);
+		this.ID = findLowestID();
+		this.name = name;
+//		positionX = Integer.parseInt(mysqlconn.getData("name", "posX"));
+//		positionY = Integer.parseInt(mysqlconn.getData("name", "posY"));
+	}
+	public GameCharacter(){
+		ID = 0;
+		name = null;
+	}
+	
+	private synchronized static  byte findLowestID(){
+		byte minVal = Byte.MIN_VALUE;
+		for(Byte id : IDs)
+			if(id==minVal){
+				minVal++;
+			}else{
+				break;
+			}
+
+		IDs.add(minVal-Byte.MIN_VALUE, minVal);
+		return minVal;
 	}
 }
