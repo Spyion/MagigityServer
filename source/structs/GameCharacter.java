@@ -12,6 +12,7 @@ public class GameCharacter {
 	
 	public int positionX;
 	public int positionY;
+	public boolean isWeaponDrawn;
 	//in Degrees
 	public float rotation;
 	
