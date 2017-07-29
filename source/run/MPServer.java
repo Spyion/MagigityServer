@@ -17,6 +17,7 @@ import packets.LoginRequest;
 import packets.News;
 import packets.Offline;
 import packets.Online;
+import packets.hasHit;
 
 public class MPServer {
 	private Server server;
@@ -53,6 +54,7 @@ public class MPServer {
 		kryo.register(CharactersRequest.class);
 		kryo.register(Attack.class);
 		kryo.register(DrawWeapon.class);
+		kryo.register(hasHit.class);
 	}
 	public static void main(String[] args){
 		MPServer server = new MPServer();

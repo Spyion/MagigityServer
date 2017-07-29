@@ -8,6 +8,8 @@ public class GameCharacter {
 	public final String name;
 	public final byte ID;
 	
+	public float health = 0;
+	
 	public static final ArrayList<Byte> IDs = new ArrayList<Byte>();
 	
 	public int positionX;

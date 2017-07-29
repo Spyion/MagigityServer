@@ -20,6 +20,7 @@ import packets.LoginRequest;
 import packets.News;
 import packets.Offline;
 import packets.Online;
+import packets.hasHit;
 import structs.GameCharacter;
 import tools.BidirectionalMap;
 import tools.BoolCoder;
@@ -94,6 +95,11 @@ public class NetworkListener extends Listener{
 				character.rotation = s.rotation;
 	
 			}else if(object instanceof Attack){
+				server.sendToAllExceptUDP(connection.getID(), object);
+
+			}else if(object instanceof hasHit){
+				hasHit h = (hasHit) object;
+				//TODO update health on server !;
 				server.sendToAllExceptUDP(connection.getID(), object);
 
 			}else if(object instanceof DrawWeapon){
